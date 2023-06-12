@@ -6,6 +6,7 @@ const middlewareController = {
     const token = req.headers.token;
     if (token) {
       //Bearer 122333
+      //get access token
       const accessToken = token.split(" ")[1];
       jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (error, user) => {
         if (error) {
@@ -20,6 +21,7 @@ const middlewareController = {
   },
   verifyTokenAndAdminAuth: (req, res, next) => {
     middlewareController.verifyToken(req, res, () => {
+      //Only allow for current user delete themselves or role admin delete all
       if (req.user.id === req.params.id || req.user.admin) {
         next();
       } else {
