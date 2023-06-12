@@ -6,9 +6,9 @@ const userController = {
     try {
       //get all user in DB
       const user = await User.find();
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   },
   //delete user
@@ -17,9 +17,9 @@ const userController = {
       //TODO: current just show the message not delete in DB
       const user = await User.findById(req.params.id);
       //   const user = await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Delete user successfully");
+      return res.status(200).json("Delete user successfully");
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   },
 };

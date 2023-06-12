@@ -19,9 +19,9 @@ const authController = {
       });
       //save to DB
       const user = await newUser.save();
-      res.status(200).json(user);
+      return res.status(200).json(user);
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   },
   //access token
@@ -63,7 +63,7 @@ const authController = {
       );
       //check user is invalid
       if (!user || !validPassword) {
-        res.status(404).json("Wrong username or password");
+        return res.status(404).json("Wrong username or password");
       }
       //check user valid
       if (user && validPassword) {
@@ -81,10 +81,10 @@ const authController = {
           sameSite: "strict",
         });
         const { password, ...others } = user._doc;
-        res.status(200).json({ ...others, accessToken });
+        return res.status(200).json({ ...others, accessToken });
       }
     } catch (error) {
-      res.status(500).json(error);
+      return res.status(500).json(error);
     }
   },
   requestRefreshToken: async (req, res) => {
@@ -114,7 +114,7 @@ const authController = {
           path: "/",
           sameSite: "strict",
         });
-        res.status(200).json({ accessToken: newAccessToken });
+        return res.status(200).json({ accessToken: newAccessToken });
       }
     });
   },
@@ -126,7 +126,7 @@ const authController = {
     refreshTokenList = refreshTokenList.filter(
       (token) => token !== req.cookies.refreshToken
     );
-    res.status(200).json("Logged out");
+    return res.status(200).json("Logged out");
   },
 };
 
